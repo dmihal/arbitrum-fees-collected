@@ -8,8 +8,7 @@ dataSources:
     source:
       address: "0x0000000000000000000000000000000000000001"
       abi: BalanceChecker
-      # startBlock: 217538
-      startBlock: 371400 
+      startBlock: 217538
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

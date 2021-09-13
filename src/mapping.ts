@@ -8,16 +8,18 @@ let FEE_COLLECTOR = Address.fromString('0x18A08f3CA72DC4B5928c26648958655690b215
 let BALANCE_CHECKER = Address.fromString('0x153B436E5Ea474f155f9A494EE954cD8D5be3247')
 
 export function handleBlock(block: ethereum.Block): void {
-  let entity = Fee.load('1')
+  let timestamp = block.timestamp.toI32()
+  let dayID = timestamp / 86400 // rounded
+
+  let entity = Fee.load(dayID.toString())
   if (!entity) {
-    entity = new Fee('1')
-    entity.totalFeesETH = BigInt.fromI32(0).toBigDecimal()
+    entity = new Fee(dayID.toString())
+
+    let checker = BalanceChecker.bind(BALANCE_CHECKER)
+
+    let totalFeesWei = checker.balanceOf(FEE_COLLECTOR)
+
+    entity.totalFeesETH = totalFeesWei.divDecimal(EIGHTEEN_DECIMALS)
+    entity.save()
   }
-
-  let checker = BalanceChecker.bind(BALANCE_CHECKER)
-
-  let totalFeesWei = checker.balanceOf(FEE_COLLECTOR)
-
-  entity.totalFeesETH = totalFeesWei.divDecimal(EIGHTEEN_DECIMALS)
-  entity.save()
 }
