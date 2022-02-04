@@ -5,13 +5,12 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ dmihal/arbitrum-fees-collected",
-
     "create-local": "graph create --node http://localhost:8020/ dmihal/arbitrum-fees-collected",
     "remove-local": "graph remove --node http://localhost:8020/ dmihal/arbitrum-fees-collected",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 dmihal/arbitrum-fees-collected"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.21.0",
-    "@graphprotocol/graph-ts": "0.21.0"
+    "@graphprotocol/graph-cli": "^0.24.1",
+    "@graphprotocol/graph-ts": "^0.24.1"
   }
 }
