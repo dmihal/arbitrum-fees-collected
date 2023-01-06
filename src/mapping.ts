@@ -11,6 +11,7 @@ let SEQUENCER_FEES_NITRO = Address.fromString('0xa4b1E63Cb4901E327597bc35d36FE8a
 let NETWORK_INFRA_FEES_NITRO = Address.fromString('0xD345e41aE2cb00311956aA7109fC801Ae8c81a52')
 let CONGESTION_FEES_NITRO = Address.fromString('0xa4B00000000000000000000000000000000000F6')
 let BALANCE_CHECKER = Address.fromString('0x153B436E5Ea474f155f9A494EE954cD8D5be3247')
+let SEQUENCER_FEES_2 = Address.fromString('0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc')
 
 export function handleBlock(block: ethereum.Block): void {
   let timestamp = block.timestamp.toI32()
@@ -28,8 +29,9 @@ export function handleBlock(block: ethereum.Block): void {
     let feesWei4 = checker.balanceOf(SEQUENCER_FEES_NITRO)
     let feesWei5 = checker.balanceOf(NETWORK_INFRA_FEES_NITRO)
     let feesWei6 = checker.balanceOf(CONGESTION_FEES_NITRO)
+    let feesWei7 = checker.balanceOf(SEQUENCER_FEES_2)
     
-    entity.totalFeesETH = feesWei1.plus(feesWei2).plus(feesWei3).plus(feesWei4).plus(feesWei5).plus(feesWei6).divDecimal(EIGHTEEN_DECIMALS)
+    entity.totalFeesETH = feesWei1.plus(feesWei2).plus(feesWei3).plus(feesWei4).plus(feesWei5).plus(feesWei6).plus(feesWei7).divDecimal(EIGHTEEN_DECIMALS)
     entity.save()
   }
 }
