@@ -21,3 +21,6 @@ dataSources:
       blockHandlers:
         - handler: handleBlock
       file: ./src/mapping.ts
+graft:
+  base: QmVS9NhvKdirNWeGvUwVWdjgJo2opSDMvmRD8Bh3ikrHqK
+  block: 50000000
