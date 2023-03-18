@@ -13,6 +13,12 @@ let CONGESTION_FEES_NITRO = Address.fromString('0xa4B000000000000000000000000000
 let BALANCE_CHECKER = Address.fromString('0x153B436E5Ea474f155f9A494EE954cD8D5be3247')
 let SEQUENCER_FEES_2 = Address.fromString('0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc')
 
+// These are new fee receiver contracts controlled by Arbitrum DAO
+let L1_BASEFEE_RECEIVER = Address.fromString('0xE6ec2174539a849f9f3ec973C66b333eD08C0c18')
+let L1_SURPLUS_RECEIVER = Address.fromString('0x2E041280627800801E90E9Ac83532fadb6cAd99A')
+let L2_BASEFEE_RECEIVER = Address.fromString('0xbF5041Fc07E1c866D15c749156657B8eEd0fb649')
+let L2_SURPLUS_RECEIVER = Address.fromString('0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d')
+
 export function handleBlock(block: ethereum.Block): void {
   let timestamp = block.timestamp.toI32()
   let dayID = timestamp / 86400 // rounded
@@ -30,8 +36,15 @@ export function handleBlock(block: ethereum.Block): void {
     let feesWei5 = checker.balanceOf(NETWORK_INFRA_FEES_NITRO)
     let feesWei6 = checker.balanceOf(CONGESTION_FEES_NITRO)
     let feesWei7 = checker.balanceOf(SEQUENCER_FEES_2)
-    
-    entity.totalFeesETH = feesWei1.plus(feesWei2).plus(feesWei3).plus(feesWei4).plus(feesWei5).plus(feesWei6).plus(feesWei7).divDecimal(EIGHTEEN_DECIMALS)
+    let feesWei8 = checker.balanceOf(L1_BASEFEE_RECEIVER)
+    let feesWei9 = checker.balanceOf(L1_SURPLUS_RECEIVER)
+    let feesWei10 = checker.balanceOf(L2_BASEFEE_RECEIVER)
+    let feesWei11 = checker.balanceOf(L2_SURPLUS_RECEIVER)    
+
+    entity.totalFeesETH = feesWei1.plus(feesWei2).plus(feesWei3)
+                                  .plus(feesWei4).plus(feesWei5).plus(feesWei6).plus(feesWei7)
+                                  .plus(feesWei8).plus(feesWei9).plus(feesWei10).plus(feesWei11)
+                                  .divDecimal(EIGHTEEN_DECIMALS)
     entity.save()
   }
 }
